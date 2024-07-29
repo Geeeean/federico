@@ -1,4 +1,4 @@
-import Tag from "./ui/tag"
+import Tag from "./ui/Tag"
 import Link from "next/link"
 
 import { FiArrowUpRight } from "react-icons/fi";

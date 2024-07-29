@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Tag from "./ui/tag";
+import Tag from "./ui/Tag";
 import { FiArrowUpRight } from "react-icons/fi";
 
 type Props = {}
