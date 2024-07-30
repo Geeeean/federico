@@ -2,14 +2,16 @@ import React, { ReactNode } from 'react'
 
 type Props = {
     text: string,
-    icon?: ReactNode
-    thick?: boolean
+    icon?: ReactNode,
+    thick?: boolean,
+    border?: boolean,
+    underline?: boolean
 }
 
-const Tag = ({ text, icon, thick = false }: Props) => {
+const Tag = ({ text, icon, thick = false, border = true, underline = false }: Props) => {
     return (
 
-        <div className="border border-primary py-1 px-3 rounded-full flex items-center">
+        <div className={`w-fit border-primary ${border ? "border py-1 px-3 rounded-full" : ""} ${underline ? "border-b" : ""} flex items-center`}>
             <span className={`${thick ? "font-medium" : ""}`}>{text}</span>
             {icon}
         </div>

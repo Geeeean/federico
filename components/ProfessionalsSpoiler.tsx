@@ -11,13 +11,12 @@ const BTN_CONT = "SCOPRI DI PIU"
 
 const ProfessionalsSpoiler = (props: Props) => {
     return (
-        <div className='h-screen max-h-[750px] flex flex-col justify-center items-center gap-6 text-center'>
+        <div className='flex flex-col justify-center items-center gap-6 text-center'>
             <Tag text={TAG_CONT} />
             <p className="text-6xl max-w-[750px] font-light">{DESC}</p>
             <div className="rounded-full w-[600px] bg-muted h-20 my-6"></div>
-            <Link href="#" className="text-lg flex gap-1 border-b border-primary">
-                <span>{BTN_CONT}</span>
-                <FiArrowUpRight size={24} />
+            <Link href="#" className="text-lg">
+                <Tag text={BTN_CONT} border={false} icon={<FiArrowUpRight size={24} />} underline/>
             </Link>
         </div>
     )

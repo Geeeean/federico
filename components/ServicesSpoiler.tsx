@@ -14,7 +14,7 @@ const SERVICES = [
 
 const ServicesSpoiler = (props: Props) => {
     return (
-        <div className='flex w-full h-32 text-xl gap-6 [&>*]:border-t [&>*]:border-primary [&>*]:pt-2'>
+        <div className='flex w-full text-xl gap-6 [&>*]:border-t [&>*]:border-primary [&>*]:pt-2'>
             <div className='w-1/3'>{TITLE}</div>
             <div>
                 <p>{DESC}</p>
