@@ -17,8 +17,11 @@ const config: Config = {
         background: "#FFFFF0",
         primary: "#09090B",
         secondary: "#FBD26F",
+        royal: "#0C4575",
         muted: "#D4D4D8",
-      }
+        // background: "#0C4575",
+        // primary: "#FFFFF0",
+      },
     },
   },
   plugins: [],

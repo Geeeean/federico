@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Wrapper from "@/components/Wrapper";
 import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,10 +20,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-background flex flex-col items-center`}>
+      <body className={`${inter.className} bg-background`}>
         <Wrapper>
           <Nav />
-          {children}
+          <div className="mt-6 mb-20 md:mt-12 md:mb-56">
+            {children}
+          </div>
+          <Footer />
         </Wrapper>
       </body>
     </html>

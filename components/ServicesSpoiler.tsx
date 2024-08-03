@@ -14,11 +14,13 @@ const SERVICES = [
 
 const ServicesSpoiler = (props: Props) => {
     return (
-        <div className='flex w-full text-xl gap-6 [&>*]:border-t [&>*]:border-primary [&>*]:pt-2'>
-            <div className='w-1/3'>{TITLE}</div>
+        <div className='flex flex-col md:flex-row w-full text-xl gap-3 md:gap-6 md:[&>*]:border-t [&>*]:border-primary md:[&>*]:pt-2'>
+            <p className='md:w-1/3 font-medium'>{TITLE}</p>
             <div>
-                <p>{DESC}</p>
-                <div className='mt-12'>
+                <p className="text-justify md:text-left">
+                    {DESC}
+                </p>
+                <div className='mt-6 md:mt-12'>
                     {SERVICES.map((str: string, index: number) => {
                         return (
                             <div key={index} className='flex items-center gap-2 border-t border-primary pt-4 py-4 hover:bg-black/5'>
