@@ -9,7 +9,7 @@ const BTN_CONT = "Continua a leggere"
 
 const IdentitySpoiler = (props: Props) => {
     return (
-            <div className='flex flex-col md:flex-row justify-center items-center gap-10 text-center md:text-left'>
+            <div className='bg-royal rounded-xl py-10 md:py-36 px-6 text-background flex flex-col md:flex-row justify-center items-center gap-10 text-center md:text-left'>
                 <div className="text-xl">
                     <p className="font-medium mb-2 md:mb-0">{TITLE}</p>
                     <p className="max-w-xl">{DESC}</p>

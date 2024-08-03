@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import Loading from "@/components/Loading";
+
 import Wrapper from "@/components/Wrapper";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -21,13 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-background`}>
-        <Wrapper>
-          <Nav />
-          <div className="mt-6 mb-20 md:mt-12 md:mb-56">
-            {children}
-          </div>
-          <Footer />
-        </Wrapper>
+          <Loading />
+          <Wrapper>
+            <Nav />
+            <div className="mt-6 md:mt-12 mb-20">
+              {children}
+            </div>
+            <Footer />
+          </Wrapper>
       </body>
     </html>
   );

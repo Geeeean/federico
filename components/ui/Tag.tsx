@@ -6,7 +6,7 @@ type Props = {
     thick?: boolean,
     border?: boolean,
     underline?: boolean,
-    secondary?: boolean
+    secondary?: boolean,
 }
 
 const Tag = ({ text, icon, thick = false, border = true, underline = false, secondary = false }: Props) => {
