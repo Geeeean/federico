@@ -5,13 +5,9 @@ import { delay, motion, MotionConfig } from "framer-motion"
 import Banner from "./Banner"
 import Image from "next/image"
 
-// import build from "@/public/mauro-lima-yJat6lc2KUQ-unsplash.jpg"
 import build from "@/public/chloe-4hirCrRfB04-unsplash 2.png"
-// import build from "@/public/ssshape.svg"
 
-import { loadingDelay } from "./Loading"
 import Link from "next/link"
-import Tag from "./ui/Tag"
 
 type Props = {}
 
