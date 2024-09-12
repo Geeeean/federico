@@ -18,6 +18,7 @@ const ContactForm = (props: Props) => {
                 className='p-4 w-full ring-1 bg-primary text-background rounded-lg flex flex-col gap-8'
                 transition={{ type: "spring", duration: 0.5, bounce: 0, delay: 0.3 }}
                 variants={variants}
+                viewport={{ once: true }}
                 initial="hidden"
                 whileInView="show"
             >
