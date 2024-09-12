@@ -1,10 +1,8 @@
 "use client"
 
 import { motion, MotionConfig } from "framer-motion";
-import Tag from "./ui/Tag"
+import Tag from "@/components/ui/Tag"
 import Link from "next/link"
-
-import { FiArrowUpRight } from "react-icons/fi";
 
 type Props = {}
 

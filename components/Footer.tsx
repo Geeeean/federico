@@ -1,7 +1,7 @@
 import Image from "next/image"
 
 import { FiArrowUpRight } from "react-icons/fi"
-import Tag from "./ui/Tag"
+import Tag from "@/components/ui/Tag"
 
 type Props = {}
 
