@@ -5,12 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link'
 import { IoIosMenu } from "react-icons/io";
 
-const BTN_CONT = "CONTATTACI"
+const BTN_CONT = "Contattaci"
 
 import logo from "@/public/logo_white.svg"
 import { useState } from 'react';
 import MobileNav from './MobileNav';
-import Tag from './ui/Tag';
 import { motion } from 'framer-motion';
 
 export const NAV_ITEMS = [
@@ -46,7 +45,7 @@ const Nav = (props: Props) => {
           <Link href="#">
             {/* <Tag text={BTN_CONT} icon={null} thick /> */}
             {/* <span className='italic font-serif text-2xl'>Contattaci</span> */}
-            <div className='px-3 py-1 bg-primary text-background rounded-full ring-1 ring-primary font-medium'>{BTN_CONT}</div>
+            <div className='px-3 py-1 bg-primary text-background rounded-full ring-1 ring-primary font-bold'>{BTN_CONT}</div>
           </Link>
         </motion.div>
       </div>

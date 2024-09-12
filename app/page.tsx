@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import ProfessionalsSpoiler from "@/components/ProfessionalsSpoiler";
 import ServicesSpoiler from "@/components/ServicesSpoiler";
 import IdentitySpoiler from "@/components/IdentitySpoiler";
+import ContactForm from "@/components/ContactForm";
 
 export default function Home() {
   return (
@@ -9,7 +10,8 @@ export default function Home() {
       <Hero />
       <ServicesSpoiler />
       <ProfessionalsSpoiler />
-      {/* <IdentitySpoiler /> */}
+      <ContactForm />
+      <IdentitySpoiler />
     </main>
   );
 }
