@@ -6,16 +6,13 @@ import IdentitySpoiler from "@/components/IdentitySpoiler";
 
 export default function Home() {
   return (
-    <main className="flex flex-col gap-20 md:gap-56 relative">
-      <div className="flex flex-col gap-20 border-t border-primary pt-2 md:border-none">
-        <div className="hidden md:block">
-          <Banner border />
-        </div>
+    <main className="flex flex-col gap-20 md:gap-56 relative items-center">
+      <div className="flex flex-col gap-20 md:border-none items-center">
         <Hero />
       </div>
       <ProfessionalsSpoiler />
       <ServicesSpoiler />
-      <IdentitySpoiler />
+      {/* <IdentitySpoiler /> */}
     </main>
   );
 }
