@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={`${inter.className} bg-background`}>
           <Wrapper>
             <Nav />
-            <div className="mt-6 mb-20">
+            <div className="my-6">
               {children}
             </div>
             <Footer />

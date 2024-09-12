@@ -31,7 +31,7 @@ const MobileNav = ({ setShow, show }: Props) => {
         <AnimatePresence mode="wait">
             {
                 show ? (<motion.nav
-                    className={`index absolute top-0 left-0 h-dvh w-screen bg-gray-950/70 backdrop-blur-2xl p-4 font-serif text-gray-50 md:hidden z-50 flex flex-col`}
+                    className={`index absolute top-0 left-0 h-dvh w-screen bg-gray-950/70 backdrop-blur-2xl px-4 py-6 font-serif text-gray-50 md:hidden z-50 flex flex-col`}
                     variants={navVariants}
                     initial="initial"
                     animate="show"
@@ -41,13 +41,12 @@ const MobileNav = ({ setShow, show }: Props) => {
                     <div className="flex w-full">
                         <IoClose
                             onClick={() => setShow((isOpen: boolean) => !isOpen)}
-                            size={24}
+                            size={32}
                         />
                     </div>
                     <div className="flex flex-col h-full justify-center items-center gap-20">
                         <motion.div variants={liVariants} initial="initial"
                             transition={{ type: "spring", bounce: 0, duration: 0.5, delay: 0.45 }}
-
                             animate="show"
                             exit="exit">
                             <Image alt="logo" src={logo} width={150} />

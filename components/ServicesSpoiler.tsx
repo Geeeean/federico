@@ -25,25 +25,25 @@ const variants = {
 
 const ServicesSpoiler = (props: Props) => {
     return (
-        <MotionConfig transition={{ type: "spring", duration: 0.3, bounce: 0 }}>
-            <div className='px-4 max-w-2xl flex flex-col md:flex-row w-full text-xl gap-3 md:gap-6 md:[&>*]:border-t [&>*]:border-primary md:[&>*]:pt-2'>
+        <MotionConfig transition={{ type: "spring", duration: 0.3, bounce: 0, delay: 0.3 }}>
+            <div className='px-4 max-w-2xl flex flex-col md:flex-row w-full text-xl gap-3 md:gap-6 border-primary'>
                 <motion.span
                     viewport={{ once: true }}
                     initial="hidden"
                     whileInView="show"
                     variants={variants}
-                    className="font-serif italic text-xl mr-2 hidden md:block text-secondary">{TITLE}</motion.span>
+                    className="font-serif italic text-xl mr-2 hidden md:block text-secondary md:border-t md:pt-2">{TITLE}</motion.span>
                 <div>
                     <motion.div
                         initial="hidden"
                         viewport={{ once: true }}
                         whileInView="show"
-                        transition={{ delayChildren: 0.3 }}
+                        // transition={{ delayChildren: 0.3 }}
                         variants={variants}>
-                        <span className="font-serif italic text-xl mr-2 md:hidden text-secondary">{TITLE}.</span>
-                        <span className="md:text-left text-lg">
+                        <p className="md:text-left text-lg md:border-t md:pt-2">
+                            <span className="font-serif italic text-xl mr-2 md:hidden text-secondary">{TITLE}.</span>
                             Lo Studio Legale <span className="font-serif font-medium">Federico & Partners</span> offre attività di consulenza stragiudiziale e giudiziale in ogni grado di giudizio.
-                        </span>
+                        </p>
                     </motion.div>
                     <motion.div
                         viewport={{ once: true }}
