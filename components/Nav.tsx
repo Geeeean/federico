@@ -8,14 +8,15 @@ import { IoIosMenu } from "react-icons/io";
 const BTN_CONT = "Contattaci"
 
 import logo from "@/public/logo_white.svg"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MobileNav from './MobileNav';
 import { motion } from 'framer-motion';
 
 export const NAV_ITEMS = [
+  { copy: "Servizi", href: "/#services" },
   { copy: "Professionisti", href: "#" },
-  { copy: "Marchio", href: "#" },
-  { copy: "Servizi", href: "#" },
+  { copy: "Contattaci", href: "/#contactForm" },
+  { copy: "Storia", href: "/identity" },
 ]
 
 type Props = {}
@@ -23,33 +24,43 @@ type Props = {}
 const Nav = (props: Props) => {
   const [show, setShow] = useState<boolean>(false)
 
+  useEffect(() => {
+    if (show) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    // Cleanup: assicurati di rimuovere la classe quando il componente si smonta
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [show]);
+
   return (
-    <div className='w-full grid grid-cols-3 max-w-2xl'>
-      <MobileNav setShow={setShow} show={show} />
-      <div className='flex items-center gap-2'>
-        <IoIosMenu size={32} className='md:hidden' onClick={() => setShow(true)} />
-        <Image src={logo} alt="logo" width={64} height={64} className='hidden md:block'></Image>
+    <div className='px-4 w-full md:px-0 mb-4 max-w-3xl'>
+      <div className='border-b border-primary w-full grid grid-cols-[1fr,auto] py-4 mx-auto'>
+        <MobileNav setShow={setShow} show={show} />
+        <Link href="/">
+          <div className='flex items-center gap-2'>
+            <Image src={logo} alt="logo" width={50} height={50} className='hidden md:block'></Image>
+            <span className='font-serif text-3xl md:text-4xl'>Federico & Partners</span>
+          </div>
+        </Link>
+
+        <div className='hidden md:flex gap-4 items-center justify-center'>
+          {
+            NAV_ITEMS.map((item, index) => (
+              <Link href={item.href} className='hidden md:block' key={index}>{item.copy}</Link>
+            ))
+          }
+        </div>
+
+
+        <div className='flex justify-end items-center '>
+          <IoIosMenu size={32} className='md:hidden' onClick={() => setShow(true)} />
+        </div>
       </div>
-
-      <div className='hidden md:flex gap-4 items-center justify-center'>
-        {
-          NAV_ITEMS.map((item, index) => (
-            <Link href="#" className='hidden md:block' key={index}>{item.copy}</Link>
-          ))
-        }
-      </div>
-
-
-      <div className='flex justify-end items-center col-span-2 md:col-span-1'>
-        <motion.div whileTap={{scale: 0.9}}>
-          <Link href="#">
-            {/* <Tag text={BTN_CONT} icon={null} thick /> */}
-            {/* <span className='italic font-serif text-2xl'>Contattaci</span> */}
-            <div className='px-3 py-1 bg-primary text-background rounded-full ring-1 ring-primary font-bold'>{BTN_CONT}</div>
-          </Link>
-        </motion.div>
-      </div>
-
     </div>
   )
 }

@@ -26,7 +26,7 @@ const variants = {
 const ServicesSpoiler = (props: Props) => {
     return (
         <MotionConfig transition={{ type: "spring", duration: 0.3, bounce: 0, delay: 0.3 }}>
-            <div className='px-4 max-w-2xl flex flex-col md:flex-row w-full text-xl gap-3 md:gap-6 border-primary'>
+            <div className='px-4 max-w-3xl flex flex-col md:flex-row w-full text-xl gap-3 md:gap-6 border-primary'>
                 <motion.span
                     viewport={{ once: true }}
                     initial="hidden"
@@ -42,7 +42,7 @@ const ServicesSpoiler = (props: Props) => {
                         variants={variants}>
                         <p className="md:text-left text-lg md:border-t md:pt-2">
                             <span className="font-serif italic text-xl mr-2 md:hidden text-secondary">{TITLE}.</span>
-                            Lo Studio Legale <span className="font-serif font-medium">Federico & Partners</span> offre attività di consulenza stragiudiziale e giudiziale in ogni grado di giudizio.
+                            Lo Studio Legale <span className="font-serif italic font-medium">Federico & Partners</span> offre attività di consulenza stragiudiziale e giudiziale in ogni grado di giudizio.
                         </p>
                     </motion.div>
                     <motion.div

@@ -38,7 +38,7 @@ const MobileNav = ({ setShow, show }: Props) => {
                     exit="exit"
                     transition={{ ease: "easeInOut", bounce: 0, duration: 0.4 }}
                 >
-                    <div className="flex w-full">
+                    <div className="flex w-full justify-end">
                         <IoClose
                             onClick={() => setShow((isOpen: boolean) => !isOpen)}
                             size={32}

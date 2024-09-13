@@ -13,7 +13,7 @@ const variants = {
 
 const ContactForm = (props: Props) => {
     return (
-        <div className="max-w-2xl p-4 md:p-0 w-full">
+        <div className="max-w-3xl p-4 md:px-0 md:py-8 w-full" id='contactForm'>
             <motion.form
                 className='p-4 w-full ring-1 bg-primary text-background rounded-lg flex flex-col gap-8'
                 transition={{ type: "spring", duration: 0.5, bounce: 0, delay: 0.3 }}

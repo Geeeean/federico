@@ -24,31 +24,33 @@ import logo from "@/public/logo_blue.svg"
 
 const Footer = (props: Props) => {
     return (
-        <div className='w-full bg-primary text-background p-4 md:p-8 rounded-2xl flex flex-col gap-8 md:gap-20 [&>*]:flex [&>*]:w-full [&>*]:justify-between'>
-            <div className="flex flex-col md:flex-row gap-8">
-                <Image src={logo} alt="logo" width={100} height={100}></Image>
-                {/* <div className='md:text-right'>
+        <div className="mt-4 mx-auto w-full max-w-3xl p-4 md:px-0">
+            <div className='w-full bg-primary text-background p-4 md:p-8 rounded-xl flex flex-col gap-8 md:gap-20 [&>*]:flex [&>*]:w-full [&>*]:justify-between'>
+                <div className="flex flex-col md:flex-row gap-8">
+                    <Image src={logo} alt="logo" width={100} height={100}></Image>
+                    {/* <div className='md:text-right'>
                     <p>{PIVA.title}</p>
                     <p>{PIVA.value}</p>
-                </div> */}
-            </div>
-            <div className="flex flex-col md:flex-row gap-8">
-                <div className="flex flex-col gap-4">
-                    <div>
-                        <p className="text-xs">Indirizzo</p>
-                        <p>{LOCATION.address}</p>
-                        <p>{LOCATION.city}</p>
-                    </div>
-                    <div>
-                        <p className="text-xs">Telefono</p>
-                        <p>{CONTACTS.number}</p>
-                        <p className="text-xs mt-2">Email</p>
-                        <p>{CONTACTS.email}</p>
-                    </div>
+                    </div> */}
                 </div>
-                <div className="flex gap-4 md:items-end">
-                    <Tag text="Facebook" border={false} underline secondary icon={<FiArrowUpRight size={24} />} thick />
-                    <Tag text="Instagram" border={false} underline secondary icon={<FiArrowUpRight size={24} />} thick />
+                <div className="flex flex-col md:flex-row gap-8">
+                    <div className="flex flex-col gap-4">
+                        <div>
+                            <p className="text-xs">Indirizzo</p>
+                            <p>{LOCATION.address}</p>
+                            <p>{LOCATION.city}</p>
+                        </div>
+                        <div>
+                            <p className="text-xs">Telefono</p>
+                            <p>{CONTACTS.number}</p>
+                            <p className="text-xs mt-2">Email</p>
+                            <p>{CONTACTS.email}</p>
+                        </div>
+                    </div>
+                    <div className="flex gap-4 md:items-end">
+                        <Tag text="Facebook" border={false} underline secondary icon={<FiArrowUpRight size={24} />} thick />
+                        <Tag text="Instagram" border={false} underline secondary icon={<FiArrowUpRight size={24} />} thick />
+                    </div>
                 </div>
             </div>
         </div>
