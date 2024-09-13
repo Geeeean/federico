@@ -5,10 +5,24 @@ type Props = {}
 import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
 import { motion } from 'framer-motion'
+import { FormEvent } from 'react'
 
 const variants = {
     hidden: { filter: "blur(4px)", transform: "translateY(15px)", opacity: 0 },
     show: { filter: "blur(0px)", transform: "translateY(0px)", opacity: 1 }
+}
+
+const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const target = e.target as typeof e.target & {
+        name: { value: string };
+        email: { value: string };
+        description: { value: string };
+        telephone: { value: string };
+    };
+
+    console.log(target.email.value)
 }
 
 const ContactForm = (props: Props) => {
@@ -21,6 +35,7 @@ const ContactForm = (props: Props) => {
                 viewport={{ once: true }}
                 initial="hidden"
                 whileInView="show"
+                onSubmit={handleSubmit}
             >
                 <div>
                     <p className='font-semibold text-xl md:text-3xl'>Contattaci per una consulenza</p>
@@ -30,23 +45,23 @@ const ContactForm = (props: Props) => {
                 <div className='flex flex-col gap-5'>
                     <div>
                         <span className='font-semibold'>Nome</span>
-                        <Input id="Nome" placeholder="Mario Rossi" required className='mt-1' />
+                        <Input id="Nome" name='name' placeholder="Mario Rossi" required className='mt-1' />
                     </div>
                     <div>
                         <span className='font-semibold'>Email</span>
-                        <Input id="Email" placeholder="mario.rossi@gmail.com" required type='email' className='mt-1' />
+                        <Input id="Email" name='email' placeholder="mario.rossi@gmail.com" required type='email' className='mt-1' />
                     </div>
                     <div>
                         <span className='font-semibold'>Cellulare</span>
-                        <Input id="Nome" placeholder="+39 XXX XXX XXXX" required className='mt-1' />
+                        <Input id="Nome" name='telephone' placeholder="+39 XXX XXX XXXX" required className='mt-1' />
                     </div>
                     <div>
                         <span className='font-semibold'>Descrizione</span>
-                        <Textarea className='h-36' placeholder="Buongiorno, vorrei richiedere una consulenza legale in merito a una questione di diritto del lavoro. Sono stato recentemente licenziato dalla mia azienda senza preavviso..." />
+                        <Textarea name='description' className='h-36' placeholder="Buongiorno, vorrei richiedere una consulenza legale in merito a una questione di diritto del lavoro. Sono stato recentemente licenziato dalla mia azienda senza preavviso..." />
                     </div>
                 </div>
 
-                <div className='bg-background text-primary font-bold w-full py-3 text-center rounded-lg'>Invia il modulo</div>
+                <button className='bg-background text-primary font-bold w-full py-3 text-center rounded-lg'>Invia il modulo</button>
             </motion.form>
         </div>
     )

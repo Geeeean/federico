@@ -16,7 +16,7 @@ const LOCATION = {
 }
 
 const CONTACTS = {
-    email: "segreteria.studiolegalefederico@gmail.com",
+    email: "info@studiolegalefederico.eu",
     number: "06 4550 4343"
 }
 

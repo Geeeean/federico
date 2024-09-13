@@ -53,9 +53,9 @@ const ServicesSpoiler = (props: Props) => {
                         className='mt-6 md:mt-12'>
                         {SERVICES.map((str: string, index: number) => {
                             return (
-                                <motion.div variants={variants} key={index} className='grid grid-cols-[auto,1fr] gap-2 items-center border-t border-primary pt-4 py-4 hover:bg-black/5'>
+                                <motion.div variants={variants} key={index} className='border-t border-primary pt-4 py-4 hover:bg-black/5'>
                                     <span>{str}</span>
-                                    <BsArrowUpRightCircle />
+                                    {/* <BsArrowUpRightCircle /> */}
                                 </motion.div>
                             )
                         })}

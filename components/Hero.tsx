@@ -4,7 +4,8 @@ import { motion, MotionConfig } from "framer-motion"
 
 import Image from "next/image"
 
-import build from "@/public/chloe-4hirCrRfB04-unsplash 2.png"
+import build from "@/public/gary-walker-jones-4RCEZ0DSd88-unsplash.jpg"
+// import build from "@/public/colosseo.jpg"
 
 import Link from "next/link"
 
