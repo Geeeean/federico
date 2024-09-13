@@ -18,7 +18,7 @@ const variants = {
 const ProfessionalsSpoiler = (props: Props) => {
     return (
         <MotionConfig transition={{ type: "spring", duration: 0.3, bounce: 0 }}>
-            <div className="w-screen flex items-center justify-center bg-primary p-8 md:py-16 my-4">
+            <div className="w-screen flex items-center justify-center bg-primary p-8 md:py-16 my-4 text-lg">
                 <div className='flex flex-col justify-center items-center gap-8 text-center md:py-0 text-background max-w-3xl'>
                     <motion.div
                         viewport={{ once: true }}
