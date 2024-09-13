@@ -21,6 +21,7 @@ const CONTACTS = {
 }
 
 import logo from "@/public/logo_blue.svg"
+import Link from "next/link"
 
 const Footer = (props: Props) => {
     return (
@@ -48,8 +49,12 @@ const Footer = (props: Props) => {
                         </div>
                     </div>
                     <div className="flex gap-4 md:items-end">
-                        <Tag text="Facebook" border={false} underline secondary icon={<FiArrowUpRight size={24} />} thick />
-                        <Tag text="Instagram" border={false} underline secondary icon={<FiArrowUpRight size={24} />} thick />
+                        <Link href="https://www.facebook.com/studiolegalefederico/?locale=it_IT">
+                            <Tag text="Facebook" border={false} underline secondary icon={<FiArrowUpRight size={24} />} thick />
+                        </Link>
+                        <Link href="https://www.instagram.com/studio_legale_federico?igsh=MWFieDluYmN5YmtqbQ==">
+                            <Tag text="Instagram" border={false} underline secondary icon={<FiArrowUpRight size={24} />} thick />
+                        </Link>
                     </div>
                 </div>
             </div>
