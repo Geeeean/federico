@@ -27,7 +27,7 @@ const Identity = (props: Props) => {
                         variants={variants}
                         className="text-xl font-serif z-10 border-dark mb-2"
                     >
-                        {/* <span className="text-xl bg-primary text-background font-bold rounded-full px-3 py-1">STORIA E MARCHIO</span> */}
+                        {/* <span className="text-xl bg-ivory text-royal font-bold rounded-full px-3 py-1">STORIA E MARCHIO</span> */}
                         <Tag text="STORIA E MARCHIO" thick />
                     </motion.div>
 
@@ -36,7 +36,7 @@ const Identity = (props: Props) => {
                         className=""
                         variants={variants}
                     >
-                        <span className="font-serif italic text-xl mr-2 text-secondary">La nostra storia.</span>
+                        <span className="font-serif italic text-xl mr-2 text-gold">La nostra storia.</span>
                         <span> Lo Studio Legale Federico (sede di Roma) nasce nel 1997. Il suo fondatore, l’Avv. Fabio
                             Federico, fornendo un imprimatur di competenza e professionalità, ha creato un modello, tra i
                             primi in Italia, di management applicata alla gestione dello studio legale.
@@ -55,7 +55,7 @@ const Identity = (props: Props) => {
                         className=""
                         variants={variants}
                     >
-                        <span className="font-serif italic text-xl mr-2 text-secondary">Il marchio.</span>
+                        <span className="font-serif italic text-xl mr-2 text-gold">Il marchio.</span>
                         <span>Il Marchio dello Studio Legale Federico & Partners racchiude in un simbolo gli elementi
                             fondanti del proprio modo di percepire una moderna concezione delle Scienze Forensi ed in
                             particolare della professione dell’avvocato. Il corollario terminologico che, ad esso, ruota

@@ -2,67 +2,103 @@
 
 type Props = {}
 
-import { Input } from '@/components/ui/Input'
-import { Textarea } from '@/components/ui/Textarea'
-import { motion } from 'framer-motion'
-import { FormEvent } from 'react'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { AnimatePresence, motion } from 'framer-motion'
+import { FormEvent, useCallback, useState } from 'react'
+
+import { useReCaptcha } from "next-recaptcha-v3";
 
 const variants = {
     hidden: { filter: "blur(4px)", transform: "translateY(15px)", opacity: 0 },
-    show: { filter: "blur(0px)", transform: "translateY(0px)", opacity: 1 }
+    show: { filter: "blur(0px)", transform: "translateY(0px)", opacity: 1 },
+    exit: { filter: "blur(4px)", y: "100%", opacity: 0 },
 }
 
-const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const target = e.target as typeof e.target & {
-        name: { value: string };
-        email: { value: string };
-        description: { value: string };
-        telephone: { value: string };
-    };
-
-    console.log(target.email.value)
+const submittedVariants = {
+    hidden: { filter: "blur(4px)", y: "-100%", opacity: 0 },
+    show: { filter: "blur(0px)", y: 0, opacity: 1 },
 }
 
 const ContactForm = (props: Props) => {
+    const { executeRecaptcha } = useReCaptcha();
+    const [formValues, setFormValues] = useState<{ name: string, email: string, description: string, telephone: string }>({ name: "", email: "", description: "", telephone: "" })
+
+    const [submitted, setSubmitted] = useState<boolean>(false)
+
+    const handleSubmit = useCallback(
+        async (e: FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+
+            const token = await executeRecaptcha("form_submit");
+
+            const fetchRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/modals/submit`, {
+                method: "POST",
+                body: JSON.stringify({
+                    data: { formValues },
+                    token,
+                }),
+            });
+
+            if (fetchRes.status == 200) {
+                setSubmitted(true)
+            }
+        },
+        [executeRecaptcha, formValues],
+    );
+
     return (
-        <div className="max-w-3xl p-4 md:px-0 md:py-8 w-full" id='contactForm'>
-            <motion.form
-                className='p-4 w-full ring-1 bg-primary text-background rounded-lg flex flex-col gap-8'
-                transition={{ type: "spring", duration: 0.5, bounce: 0, delay: 0.3 }}
-                variants={variants}
-                viewport={{ once: true }}
-                initial="hidden"
-                whileInView="show"
-                onSubmit={handleSubmit}
-            >
-                <div>
-                    <p className='font-semibold text-xl md:text-3xl'>Contattaci per una consulenza</p>
-                    <p className='text-background/80 text-sm md:text-base'>Compila il modulo sottostante per entrare in contatto con il nostro team di consulenza.</p>
-                </div>
+        <div className="max-w-3xl px-4 md:p-0 w-full" id='contactForm'>
+            <div className='w-full h-[650px] bg-ivory rounded-lg'>
+                <AnimatePresence mode='popLayout'>
+                    {!submitted ? (<motion.form
+                        className='p-4 w-full ring-1 bg-ivory text-royal rounded-lg flex flex-col gap-8 h-[650px] justify-between'
+                        exit={{ y: 24, opacity: 0, filter: "blur(4px)" }}
+                        transition={{ type: "spring", duration: 0.6, bounce: 0 }}
+                        key="form"
+                        variants={variants}
+                        viewport={{ once: true }}
+                        initial="hidden"
+                        whileInView="show"
+                        onSubmit={handleSubmit}
+                    >
+                        <div>
+                            <p className='font-semibold text-xl md:text-3xl'>Contattaci per una consulenza</p>
+                            <p className='text-royal/80 text-sm md:text-base'>Compila il modulo sottostante per entrare in contatto con il nostro team di consulenza.</p>
+                        </div>
 
-                <div className='flex flex-col gap-5'>
-                    <div>
-                        <span className='font-semibold'>Nome</span>
-                        <Input id="Nome" name='name' placeholder="Mario Rossi" required className='mt-1' />
-                    </div>
-                    <div>
-                        <span className='font-semibold'>Email</span>
-                        <Input id="Email" name='email' placeholder="mario.rossi@gmail.com" required type='email' className='mt-1' />
-                    </div>
-                    <div>
-                        <span className='font-semibold'>Cellulare</span>
-                        <Input id="Nome" name='telephone' placeholder="+39 XXX XXX XXXX" required className='mt-1' />
-                    </div>
-                    <div>
-                        <span className='font-semibold'>Descrizione</span>
-                        <Textarea name='description' className='h-36' placeholder="Buongiorno, vorrei richiedere una consulenza legale in merito a una questione di diritto del lavoro. Sono stato recentemente licenziato dalla mia azienda senza preavviso..." />
-                    </div>
-                </div>
+                        <div className='flex flex-col gap-5'>
+                            <div>
+                                <span className='font-semibold'>Nome</span>
+                                <Input id="Nome" name='name' placeholder="Mario Rossi" required className='mt-1' onChange={(e) => setFormValues(prev => ({ ...prev, name: e.target.value }))} />
+                            </div>
+                            <div>
+                                <span className='font-semibold'>Email</span>
+                                <Input id="Email" name='email' placeholder="mario.rossi@gmail.com" required type='email' className='mt-1' onChange={(e) => setFormValues(prev => ({ ...prev, email: e.target.value }))} />
+                            </div>
+                            <div>
+                                <span className='font-semibold'>Cellulare</span>
+                                <Input id="Nome" name='telephone' placeholder="+39 XXX XXX XXXX" required className='mt-1' onChange={(e) => setFormValues(prev => ({ ...prev, telephone: e.target.value }))} />
+                            </div>
+                            <div>
+                                <span className='font-semibold'>Descrizione</span>
+                                <Textarea name='description' className='h-40 resize-none' placeholder="Buongiorno, vorrei richiedere una consulenza legale in merito a una questione di diritto del lavoro. Sono stato recentemente licenziato dalla mia azienda senza preavviso..." onChange={(e) => setFormValues(prev => ({ ...prev, description: e.target.value }))} />
+                            </div>
+                        </div>
 
-                <button className='bg-background text-primary font-bold w-full py-3 text-center rounded-lg'>Invia il modulo</button>
-            </motion.form>
+                        <button className='bg-royal text-ivory font-bold w-full py-3 text-center rounded-lg'>Invia il modulo</button>
+                    </motion.form>) : (<motion.div
+                        key="submitted"
+                        initial={{ y: -64, opacity: 0, filter: "blur(4px)" }}
+                        animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                        transition={{ type: "spring", duration: 0.6, bounce: 0 }}
+                        className='bg-black/5 text-royal w-full h-[650px] flex flex-col justify-center items-center text-center'>
+                        <p className='text-3xl md:text-5xl font-medium mb-2'>Modulo ricevuto!</p>
+                        <p className='text-2xl md:text-4xl text-royal/50 px-8 md:px-16'>Verrai contattato dal nostro team al più presto.</p>
+                    </motion.div>)
+                    }
+                </AnimatePresence>
+            </div>
         </div>
     )
 }

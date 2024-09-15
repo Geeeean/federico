@@ -22,7 +22,7 @@ const Hero = (props: Props) => {
       <motion.div initial="hidden" animate="show" transition={{ staggerChildren: 0.15 }} className="max-w-3xl p-4 md:p-0 py-0">
         <motion.div variants={variants}>
           <p className="text-lg">
-            <span className="font-serif italic text-xl mr-2 text-secondary">Chi siamo.</span>
+            <span className="font-serif italic text-xl mr-2 text-gold">Chi siamo.</span>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est, nisi incidunt nihil at molestiae, illo voluptate sunt laudantium dolorum fuga praesentium assumenda voluptatum fugit neque. Nisi accusantium dolor odit dolorem.
           </p>
         </motion.div>

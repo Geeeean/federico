@@ -24,7 +24,7 @@ const IdentitySpoiler = (props: Props) => {
                         transition={{ delay: 0.3 }}
                         className="text-xl font-serif z-10 border-dark"
                     >
-                        <span className="text-xl bg-primary text-background font-bold rounded-full px-3 py-1">STORIA E MARCHIO</span>
+                        <span className="text-xl bg-ivory text-royal font-bold rounded-full px-3 py-1">STORIA E MARCHIO</span>
                     </motion.div>
 
 
@@ -36,7 +36,7 @@ const IdentitySpoiler = (props: Props) => {
                         variants={variants}
                         transition={{ delay: 0.3 }}
                     >
-                        <span className="font-serif italic text-xl mr-2 text-secondary">La nostra storia.</span>
+                        <span className="font-serif italic text-xl mr-2 text-gold">La nostra storia.</span>
                         <span> Lo Studio Legale Federico (sede di Roma) nasce nel 1997. Il suo fondatore, l’Avv. Fabio Federico, fornendo un imprimatur di competenza e professionalità, ha creato un modello, tra i primi in Italia, di management applicata alla gestione dello studio legale. </span>
                     </motion.div>
                     <motion.div
@@ -47,7 +47,7 @@ const IdentitySpoiler = (props: Props) => {
                         variants={variants}
                         transition={{ delay: 0.3 }}
                     >
-                        <span className="font-serif italic text-xl mr-2 text-secondary">Il marchio.</span>
+                        <span className="font-serif italic text-xl mr-2 text-gold">Il marchio.</span>
                         <span>Il Marchio dello Studio Legale Federico & Partners racchiude in un simbolo gli elementi fondanti del proprio modo di percepire una moderna concezione delle Scienze Forensi ed in particolare della professione dell’avvocato.</span>
                     </motion.div>
                     <Link href="/identity" className="text-md italic font-serif z-10">

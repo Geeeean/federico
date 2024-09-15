@@ -26,7 +26,7 @@ import Link from "next/link"
 const Footer = (props: Props) => {
     return (
         <div className="mt-4 mx-auto w-full max-w-3xl p-4 md:px-0">
-            <div className='w-full bg-primary text-background p-4 md:p-8 rounded-xl flex flex-col gap-8 md:gap-20 [&>*]:flex [&>*]:w-full [&>*]:justify-between'>
+            <div className='w-full bg-ivory text-royal p-4 md:p-8 rounded-xl flex flex-col gap-8 md:gap-20 [&>*]:flex [&>*]:w-full [&>*]:justify-between'>
                 <div className="flex flex-col md:flex-row gap-8">
                     <Image src={logo} alt="logo" width={100} height={100}></Image>
                     {/* <div className='md:text-right'>

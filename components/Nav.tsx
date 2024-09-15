@@ -39,7 +39,7 @@ const Nav = (props: Props) => {
 
   return (
     <div className='px-4 w-full md:px-0 mb-4 max-w-3xl'>
-      <div className='border-b border-primary w-full grid grid-cols-[1fr,auto] py-4 mx-auto'>
+      <div className='border-b border-ivory w-full grid grid-cols-[1fr,auto] py-4 mx-auto'>
         <MobileNav setShow={setShow} show={show} />
         <Link href="/">
           <div className='flex items-center gap-2'>

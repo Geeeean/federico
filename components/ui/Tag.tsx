@@ -11,7 +11,7 @@ type Props = {
 
 const Tag = ({ text, icon, thick = false, border = true, underline = false, secondary = false }: Props) => {
     return (
-        <div className={`w-fit h-fit ${!secondary ? "border-primary" : "border-background"} ${border ? "border py-1 px-3 rounded-full" : null} ${underline ? "border-b" : ""} flex items-center`}>
+        <div className={`w-fit h-fit ${secondary ? "border-royal" : "border-ivory"} ${border ? "border py-1 px-3 rounded-full" : null} ${underline ? "border-b" : ""} flex items-center`}>
             <span className={`${thick ? "font-medium" : ""}`}>{text}</span>
             {icon}
         </div>
