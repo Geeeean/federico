@@ -4,10 +4,13 @@ type Props = {}
 
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui//button'
+
 import { AnimatePresence, motion } from 'framer-motion'
 import { FormEvent, useCallback, useState } from 'react'
 
 import { useReCaptcha } from "next-recaptcha-v3";
+import clsx from 'clsx'
 
 const variants = {
     hidden: { filter: "blur(4px)", transform: "translateY(15px)", opacity: 0 },
@@ -23,12 +26,14 @@ const submittedVariants = {
 const ContactForm = (props: Props) => {
     const { executeRecaptcha } = useReCaptcha();
     const [formValues, setFormValues] = useState<{ name: string, email: string, description: string, telephone: string }>({ name: "", email: "", description: "", telephone: "" })
-
     const [submitted, setSubmitted] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const handleSubmit = useCallback(
         async (e: FormEvent<HTMLFormElement>) => {
             e.preventDefault();
+
+            setIsLoading(true);
 
             const token = await executeRecaptcha("form_submit");
 
@@ -43,6 +48,8 @@ const ContactForm = (props: Props) => {
             if (fetchRes.status == 200) {
                 setSubmitted(true)
             }
+
+            setIsLoading(false);
         },
         [executeRecaptcha, formValues],
     );
@@ -52,7 +59,7 @@ const ContactForm = (props: Props) => {
             <div className='w-full h-[650px] bg-ivory rounded-lg'>
                 <AnimatePresence mode='popLayout'>
                     {!submitted ? (<motion.form
-                        className='p-4 w-full ring-1 bg-ivory text-royal rounded-lg flex flex-col gap-8 h-[650px] justify-between'
+                        className="p-4 w-full ring-1 bg-ivory text-royal rounded-lg flex flex-col gap-8 h-[650px] justify-between overflow-hidden"
                         exit={{ y: 24, opacity: 0, filter: "blur(4px)" }}
                         transition={{ type: "spring", duration: 0.6, bounce: 0 }}
                         key="form"
@@ -62,6 +69,10 @@ const ContactForm = (props: Props) => {
                         whileInView="show"
                         onSubmit={handleSubmit}
                     >
+                        <AnimatePresence>
+                            {isLoading ? (<motion.div key="overlay" transition={{ type: "spring", duration: 0.5, bounce: 0 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className='absolute w-full h-full bg-black/10 z-40 top-0 left-0' />) : null}
+                        </AnimatePresence>
+
                         <div>
                             <p className='font-semibold text-xl md:text-3xl'>Contattaci per una consulenza</p>
                             <p className='text-royal/80 text-sm md:text-base'>Compila il modulo sottostante per entrare in contatto con il nostro team di consulenza.</p>
@@ -86,7 +97,7 @@ const ContactForm = (props: Props) => {
                             </div>
                         </div>
 
-                        <button className='bg-royal text-ivory font-bold w-full py-3 text-center rounded-lg'>Invia il modulo</button>
+                        <Button className='bg-royal text-ivory font-bold w-full py-3 hover:opacity-85 hover:bg-royal' type='submit'>Invia il modulo</Button>
                     </motion.form>) : (<motion.div
                         key="submitted"
                         initial={{ y: -64, opacity: 0, filter: "blur(4px)" }}

@@ -28,6 +28,7 @@ import { useAddPost } from "@/app/hooks/useAddPost"
 import { usePosts } from "@/app/hooks/usePosts"
 
 import Link from "next/link"
+import { useRemovePost } from "@/app/hooks/useRemovePost"
 
 type Props = {}
 
@@ -35,14 +36,15 @@ const Dashboard = (props: Props) => {
   const [post, setPost] = useState<{ title: string, description: string, link: string }>({ title: "", description: "", link: "" });
   const [open, setOpen] = useState<boolean>()
 
-  const { addPost, isPending, error: addError, isSuccess } = useAddPost();
+  const { addPost, isPending: isAddPending, error: addError, isSuccess: isAddSuccess } = useAddPost();
+  const { removePost, isPending: isRemovePending, error: removeError, isSuccess: removeSuccess } = useRemovePost()
   const { posts, isLoading, error } = usePosts();
 
   useEffect(() => {
-    if (isSuccess && !isPending) {
-      setOpen(false); // Chiudi il dialog se il post è stato aggiunto correttamente
+    if (isAddSuccess && !isAddPending) {
+      setOpen(false);
     }
-  }, [isSuccess, isPending]);
+  }, [isAddSuccess, isAddPending]);
 
   return (
     <div className="p-4 flex flex-col">
@@ -86,7 +88,7 @@ const Dashboard = (props: Props) => {
 
       <div className="overflow-auto grid grid-cols-4 auto-rows-min gap-2 h-full py-4 relative">
         {
-          !isLoading ? posts.toReversed().map((post: { title: string, description: string, link: string }, index: number) => (
+          !isLoading ? posts.toReversed().map((post: { id: number, title: string, description: string, link: string }, index: number) => (
             <Card className="h-fit" key={index}>
               <CardHeader>
                 <CardDescription>Titolo notizia</CardDescription>
@@ -99,6 +101,9 @@ const Dashboard = (props: Props) => {
               <CardFooter className="flex-col items-start">
                 <CardDescription>Link a</CardDescription>
                 <Link href={post.link}>{post.link}</Link>
+                <Button className="w-full mt-3" variant="destructive" onClick={() => {
+                  removePost({ id: post.id })
+                }}>Rimuovi</Button>
               </CardFooter>
             </Card>)
           ) : <span className="absolute top-1/2 left-1/2 text-xl -translate-x-1/2 -translate-y-1/2">Caricamento...</span>

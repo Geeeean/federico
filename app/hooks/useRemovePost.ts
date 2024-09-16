@@ -1,8 +1,8 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/react-query/client";
 
-const postPost = async (Post: { title: string, description: string, link: string | null }) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/add`, {
+const removePostFetch = async (Post: { id: number }) => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/remove`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -10,26 +10,25 @@ const postPost = async (Post: { title: string, description: string, link: string
         body: JSON.stringify({ post: Post }),
         credentials: 'include'
     })
-    
+
     if (response.status != 200) {
-        throw new Error("Error on adding post");
+        throw new Error("Error on removing post");
     }
 
     const data = await response.json();
 
-
     return data;
 }
 
-export const useAddPost = () => {
+export const useRemovePost = () => {
     const client = useQueryClient();
 
-    const { mutate: addPost, error, isPending, isSuccess } = useMutation({
-        mutationFn: postPost,
+    const { mutate: removePost, error, isPending, isSuccess } = useMutation({
+        mutationFn: removePostFetch,
         onSuccess: () => {
             client.invalidateQueries({ queryKey: [QUERY_KEY.posts] });
         },
     });
 
-    return { addPost, error, isPending, isSuccess };
+    return { removePost, error, isPending, isSuccess };
 }
