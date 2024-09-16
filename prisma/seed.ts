@@ -9,16 +9,20 @@ const main = async () => {
 
     const hashed = await bcrypt.hash(password, 10);
 
-    const admin = await db.user.upsert({
-        where: {
-            username: username,
-        },
-        update: {},
-        create: {
-            username: username,
-            password: hashed
-        },
-    })
+    try {
+        await db.user.upsert({
+            where: {
+                username: username,
+            },
+            update: {},
+            create: {
+                username: username,
+                password: hashed
+            },
+        })
+    } catch (e) {
+        console.error("Error in db seeding:", e);
+    }
 }
 
 main()

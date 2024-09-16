@@ -23,7 +23,7 @@ const Hero = (props: Props) => {
         <motion.div variants={variants}>
           <p className="text-lg">
             <span className="font-serif italic text-xl mr-2 text-gold">Chi siamo.</span>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est, nisi incidunt nihil at molestiae, illo voluptate sunt laudantium dolorum fuga praesentium assumenda voluptatum fugit neque. Nisi accusantium dolor odit dolorem.
+            Federico & Partners è uno studio legale, fondato a Roma nel 1997 e a Reggio Calabria nel 1963, da avvocati con una lunga tradizione e dedizione alla professione. Offriamo competenze specializzate in ogni branca del diritto, grazie a un modello gestionale che valorizza la collaborazione e il controllo collettivo del team, garantendo professionalità e qualità ai nostri clienti.
           </p>
         </motion.div>
 

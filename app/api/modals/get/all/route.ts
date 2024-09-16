@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
 
     try {
         const modals = await db.contactForm.findMany()
+
         return NextResponse.json({ msg: "Modals retrieved successfully", modals: modals }, { status: 200 });
     } catch (e) {
         return NextResponse.json({ msg: "Error on getting modals from db" }, { status: 500 });

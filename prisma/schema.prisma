@@ -26,4 +26,5 @@ model ContactForm {
   email String
   telephone String
   description String?
+  viewed Boolean @default(false)
 }
