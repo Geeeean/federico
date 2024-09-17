@@ -1,12 +1,11 @@
 "use client"
 
-import { BsArrowUpRightCircle } from "react-icons/bs";
 import { motion, MotionConfig } from "framer-motion"
 
 type Props = {}
 
 const TITLE = "Servizi"
-const DESC = `Lo Studio Legale <span className="font-serif italic">Federico & Partners</span> offre attività di consulenza stragiudiziale e giudiziale in ogni grado di giudizio.`
+const DESC = <span>Lo Studio Legale <span className="font-serif italic font-medium">Federico & Partners</span> offre attività di consulenza stragiudiziale e giudiziale in ogni grado di giudizio.</span>
 const SERVICES = [
     "Diritto civile e penale",
     "Contenzioso amministrativo",
@@ -38,11 +37,10 @@ const ServicesSpoiler = (props: Props) => {
                         initial="hidden"
                         viewport={{ once: true }}
                         whileInView="show"
-                        // transition={{ delayChildren: 0.3 }}
                         variants={variants}>
                         <p className="md:text-left text-lg md:border-t md:pt-2">
                             <span className="font-serif italic text-xl mr-2 md:hidden text-gold">{TITLE}.</span>
-                            Lo Studio Legale <span className="font-serif italic font-medium">Federico & Partners</span> offre attività di consulenza stragiudiziale e giudiziale in ogni grado di giudizio.
+                            {DESC}
                         </p>
                     </motion.div>
                     <motion.div
@@ -55,7 +53,6 @@ const ServicesSpoiler = (props: Props) => {
                             return (
                                 <motion.div variants={variants} key={index} className='border-t border-ivory pt-4 py-4 hover:bg-black/5'>
                                     <span>{str}</span>
-                                    {/* <BsArrowUpRightCircle /> */}
                                 </motion.div>
                             )
                         })}

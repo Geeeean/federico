@@ -10,7 +10,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { FormEvent, useCallback, useState } from 'react'
 
 import { useReCaptcha } from "next-recaptcha-v3";
-import clsx from 'clsx'
 
 const variants = {
     hidden: { filter: "blur(4px)", transform: "translateY(15px)", opacity: 0 },

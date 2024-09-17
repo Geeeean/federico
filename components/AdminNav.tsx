@@ -14,16 +14,17 @@ const NAV_ITEMS = [
     { copy: "Richieste di consulenza", href: "/dashboard/modals" },
 ]
 
+const TITLE = "Admin dashboard"
+
 const AdminNav = (props: Props) => {
     return (
         <div className="w-full p-4">
             <div className='w-full flex justify-between items-center pb-4 border-b'>
-                <span className="font-medium text-xl">Admin dashboard</span>
+                <span className="font-medium text-xl">{TITLE}</span>
                 <div className="flex gap-6 items-center">
                     {
                         NAV_ITEMS.map((el, index) => <Link className="hover:underline" href={el.href} key={index}>{el.copy}</Link>)
                     }
-                    {/* <Button>Logout <BiLogOut className="ml-2" onClick={() => signOut()} /></Button> */}
                 </div>
             </div>
         </div>

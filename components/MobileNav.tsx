@@ -22,7 +22,7 @@ const navVariants = {
 const liVariants = {
     initial: { opacity: 0, y: 15, filter: "blur(4px)" },
     show: { opacity: 1, y: 0, filter: "blur(0px)" },
-    exit: { opacity: 0, y: 15, filter: "blur(4px)" },
+    exit: { opacity: 1, y: 15, filter: "blur(4px)" },
 }
 
 
@@ -31,7 +31,7 @@ const MobileNav = ({ setShow, show }: Props) => {
         <AnimatePresence mode="wait">
             {
                 show ? (<motion.nav
-                    className={`index absolute top-0 left-0 h-dvh w-screen bg-gray-950/70 backdrop-blur-2xl px-4 py-6 font-serif text-gray-50 md:hidden z-50 flex flex-col`}
+                    className={`index fixed top-0 left-0 h-dvh w-screen bg-gray-950/70 backdrop-blur-2xl px-4 py-6 font-serif text-gray-50 md:hidden z-50 flex flex-col`}
                     variants={navVariants}
                     initial="initial"
                     animate="show"

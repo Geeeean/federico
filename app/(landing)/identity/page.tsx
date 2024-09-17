@@ -3,7 +3,7 @@
 import { motion, MotionConfig } from "framer-motion"
 import Link from "next/link"
 
-import Tag from "@/components/ui/Tag"
+import Tag from "@/components/ui/tag"
 
 const variants = {
     hidden: { filter: "blur(4px)", transform: "translateY(20px)", opacity: 0 },

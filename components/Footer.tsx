@@ -1,7 +1,7 @@
 import Image from "next/image"
 
 import { FiArrowUpRight } from "react-icons/fi"
-import Tag from "@/components/ui/Tag"
+import Tag from "@/components/ui/tag"
 
 type Props = {}
 
@@ -11,14 +11,20 @@ const PIVA = {
 }
 
 const LOCATION = {
-    city: "00184 Roma (RM)",
-    address: "Via Marco Aurelio 20"
+    COPY: "Indirizzo",
+    CITY: "00184 Roma (RM)",
+    ADDRESS: "Via Marco Aurelio 20"
 }
 
 const CONTACTS = {
-    email: "info@studiolegalefederico.eu",
-    number: "06 4550 4343"
+    EMAIL_COPY: "Email",
+    NUMBER_COPY: "Telefono",
+    EMAIL: "info@studiolegalefederico.eu",
+    NUMBER: "06 4550 4343"
 }
+
+const FB_LINK = "https://www.facebook.com/studiolegalefederico/?locale=it_IT"
+const IG_LINK = "https://www.instagram.com/studio_legale_federico?igsh=MWFieDluYmN5YmtqbQ=="
 
 import logo from "@/public/logo_blue.svg"
 import Link from "next/link"
@@ -37,22 +43,22 @@ const Footer = (props: Props) => {
                 <div className="flex flex-col md:flex-row gap-8">
                     <div className="flex flex-col gap-4">
                         <div>
-                            <p className="text-xs">Indirizzo</p>
-                            <p>{LOCATION.address}</p>
-                            <p>{LOCATION.city}</p>
+                            <p className="text-xs">{LOCATION.COPY}</p>
+                            <p>{LOCATION.ADDRESS}</p>
+                            <p>{LOCATION.CITY}</p>
                         </div>
                         <div>
-                            <p className="text-xs">Telefono</p>
-                            <p>{CONTACTS.number}</p>
-                            <p className="text-xs mt-2">Email</p>
-                            <p>{CONTACTS.email}</p>
+                            <p className="text-xs">{CONTACTS.NUMBER_COPY}</p>
+                            <p>{CONTACTS.NUMBER}</p>
+                            <p className="text-xs mt-2">{CONTACTS.EMAIL_COPY}</p>
+                            <p>{CONTACTS.EMAIL}</p>
                         </div>
                     </div>
                     <div className="flex gap-4 md:items-end">
-                        <Link href="https://www.facebook.com/studiolegalefederico/?locale=it_IT">
+                        <Link href={FB_LINK}>
                             <Tag text="Facebook" border={false} underline secondary icon={<FiArrowUpRight size={24} />} thick />
                         </Link>
-                        <Link href="https://www.instagram.com/studio_legale_federico?igsh=MWFieDluYmN5YmtqbQ==">
+                        <Link href={IG_LINK}>
                             <Tag text="Instagram" border={false} underline secondary icon={<FiArrowUpRight size={24} />} thick />
                         </Link>
                     </div>

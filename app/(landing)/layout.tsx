@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import "@/app/globals.css";
+
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
 
 import { ReCaptchaProvider } from "next-recaptcha-v3"
 
@@ -24,7 +26,9 @@ export default function RootLayout({
     <ReCaptchaProvider useEnterprise>
       <html lang="en">
         <body className={`${inter.className} bg-royal text-ivory flex flex-col items-center w-full`}>
-          <Nav />
+          <Hero>
+            <Nav />
+          </Hero>
           {children}
           <Footer />
         </body>
