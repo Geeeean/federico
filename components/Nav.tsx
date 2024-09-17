@@ -36,7 +36,7 @@ const Nav = (props: Props) => {
   }, [show]);
 
   return (
-    <div className='px-4 w-full md:px-0 my-4 max-w-3xl z-50'>
+    <div className='px-4 w-full md:px-0 my-4 max-w-3xl'>
       <div className='border-b border-ivory w-full grid grid-cols-[1fr,auto] py-4 mx-auto'>
         <MobileNav setShow={setShow} show={show} />
         <Link href="/">
