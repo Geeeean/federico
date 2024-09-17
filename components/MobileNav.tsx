@@ -31,7 +31,7 @@ const MobileNav = ({ setShow, show }: Props) => {
         <AnimatePresence mode="wait">
             {
                 show ? (<motion.nav
-                    className={`index fixed top-0 left-0 h-dvh w-screen bg-gray-950/70 backdrop-blur-2xl px-4 py-6 font-serif text-gray-50 md:hidden z-50 flex flex-col`}
+                    className={`index fixed top-0 left-0 h-dvh w-screen bg-gray-950/70 backdrop-blur-2xl px-4 py-6 font-serif text-gray-50 md:hidden z-[1000] flex flex-col`}
                     variants={navVariants}
                     initial="initial"
                     animate="show"

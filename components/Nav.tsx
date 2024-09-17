@@ -11,7 +11,7 @@ import MobileNav from './MobileNav';
 
 export const NAV_ITEMS = [
   { copy: "Servizi", href: "/#services" },
-  { copy: "Professionisti", href: "#" },
+  { copy: "Professionisti", href: "/#professionals" },
   { copy: "Contattaci", href: "/#contactForm" },
   { copy: "Storia", href: "/identity" },
 ]

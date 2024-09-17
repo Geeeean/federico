@@ -26,7 +26,7 @@ const IdentitySpoiler = (props: Props) => {
     return (
         <MotionConfig transition={{ type: "spring", duration: 0.3, bounce: 0 }}>
             <div className="w-screen flex items-center justify-center p-4 md:py-8 my-4">
-                <div className='flex flex-col justify-center items-center gap-8 text-justify md:py-0 max-w-3xl text-lg'>
+                <div className='flex flex-col justify-center items-center gap-8 md:py-0 max-w-3xl text-lg'>
                     <motion.div
                         viewport={{ once: true }}
                         initial="hidden"
