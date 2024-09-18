@@ -1,6 +1,4 @@
-import { authOptions } from "@/lib/auth";
 import { db } from "@/prisma/client";
-import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -23,11 +21,15 @@ export async function POST(req: NextRequest) {
 
     const data = await res.json()
 
-    if (!data.success)
+    if (!data.success || !body.data.formValues.terms)
         return NextResponse.json({ error: "Not valid request" }, { status: 401 });
 
     try {
-        await db.contactForm.create({ data: body.data.formValues })
+        const formValues = body.data.formValues
+        delete formValues.terms
+
+        await db.contactForm.create({ data: formValues })
+
         return NextResponse.json({ msg: "Created new contact modal row" }, { status: 200 });
     } catch (e) {
         return NextResponse.json({ error: "Error on inserting modal row" }, { status: 500 });
