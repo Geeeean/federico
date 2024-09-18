@@ -2,7 +2,6 @@
 
 import { motion, MotionConfig } from "framer-motion";
 import Tag from "@/components/ui/tag"
-import Link from "next/link"
 
 type Props = {}
 
@@ -14,8 +13,8 @@ const TITLE_COPY = "Il titolare."
 const COPY = `Avv. Fabio Federico. Avvocato penalista del Foro di Roma e patrocinante in Cassazione. Ha
                             conseguito il diploma di specializzazione nelle materie penalistiche presso l’Università La
                             Sapienza di Roma. È autore di pubblicazioni in diritto e procedura penale e saggista attivo in
-                            vari ambiti tematici, nonché membro di commissioni di studio dell’Ordine degli avvocati e
-                            delle Camere penali di Roma.`
+                            vari ambiti tematici. Docente e relatore di seminari in materie giuridiche e convegni dedicati 
+                            alle tematiche connesse alla violenza di genere ed ai diritti umani.`
 
 const variants = {
     hidden: { filter: "blur(4px)", transform: "translateY(15px)", opacity: 0 },
