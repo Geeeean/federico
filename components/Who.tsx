@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, MotionConfig } from "framer-motion"
+import { motion } from "framer-motion"
 
 const variants = {
   hidden: { filter: "blur(4px)", transform: "translateY(15px)", opacity: 0 },
@@ -16,8 +16,8 @@ const Hero = (props: Props) => {
   return (
     <motion.div initial="hidden" animate="show" transition={{ staggerChildren: 0.15 }} className="max-w-3xl p-4 py-0">
       <motion.div variants={variants}>
-        <p className="text-lg">
-          <span className="font-serif italic text-xl mr-2 text-gold text-justify">{INTRO_TITLE}</span>
+        <p className="text-lg text-justify">
+          <span className="font-serif italic text-xl mr-2 text-gold">{INTRO_TITLE}</span>
           {INTRO_COPY}
         </p>
       </motion.div>

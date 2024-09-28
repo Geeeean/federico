@@ -17,7 +17,7 @@ const Identity = (props: Props) => {
     return (
         <MotionConfig transition={{ type: "spring", duration: 0.32, bounce: 0 }}>
             <div className="w-screen flex items-center justify-center p-4 text-lg">
-                <motion.div className='flex flex-col justify-center gap-4 max-w-3xl'
+                <motion.div className='flex flex-col text-justify gap-4 max-w-3xl'
                     initial="hidden"
                     whileInView="show"
                     transition={{ staggerChildren: 0.1 }}
