@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { IoClose } from "react-icons/io5"
 import { NAV_ITEMS } from "./Nav"
 import Link from "next/link"
-import Image from "next/image"
+import Image from "next/legacy/image"
 
 import logo from "@/public/logo_white.svg"
 

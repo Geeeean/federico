@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image"
+import Image from "next/legacy/image"
 import build from "@/public/gary-walker-jones-4RCEZ0DSd88-unsplash.jpg"
 
 import logo from "@/public/logo_white.svg"

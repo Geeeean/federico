@@ -1,4 +1,4 @@
-import Image from "next/image"
+import Image from "next/legacy/image"
 
 import { FiArrowUpRight } from "react-icons/fi"
 import Tag from "@/components/ui/tag"
