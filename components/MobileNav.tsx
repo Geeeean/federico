@@ -49,7 +49,7 @@ const MobileNav = ({ setShow, show }: Props) => {
                             transition={{ type: "spring", bounce: 0, duration: 0.5, delay: 0.45 }}
                             animate="show"
                             exit="exit">
-                            <Image alt="logo" src={logo} width={150} />
+                            <Image alt="logo" src={logo} width={150} height={150} />
                         </motion.div>
                         <motion.ul
                             className="text-center"
