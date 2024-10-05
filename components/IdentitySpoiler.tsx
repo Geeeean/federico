@@ -25,7 +25,7 @@ type Props = {}
 const IdentitySpoiler = (props: Props) => {
     return (
         <MotionConfig transition={{ type: "spring", duration: 0.3, bounce: 0 }}>
-            <div className="w-screen flex items-center justify-center p-4 py-8 my-4">
+            <div className="w-screen flex items-center justify-center p-4 my-4">
                 <div className='flex flex-col text-justify justify-center gap-8 md:py-0 max-w-3xl text-lg'>
                     <motion.div
                         viewport={{ once: true }}
@@ -33,9 +33,9 @@ const IdentitySpoiler = (props: Props) => {
                         whileInView="show"
                         variants={variants}
                         transition={{ delay: 0.3 }}
-                        className="text-xl font-serif z-10 border-dark"
+                        className="font-serif z-10 border-dark"
                     >
-                        <span className="text-xl border-ivory border rounded-full px-4 py-2">{TITLE}</span>
+                        <span className="text-2xl md:text-4xl mt-1">{TITLE}</span>
                     </motion.div>
 
                     <MotionConfig transition={{ delay: 0.3 }}>
@@ -58,11 +58,18 @@ const IdentitySpoiler = (props: Props) => {
                             <span className="font-serif italic text-xl mr-2 text-gold">{BRAND_SEC_TITLE}</span>
                             {BRAND_SEC_COPY}
                         </motion.p>
-                    </MotionConfig>
 
-                    <Link href="/identity" className="text-md italic font-serif z-10">
-                        <Tag text={EXPLORE_BTN_COPY} border={false} icon={null} underline />
-                    </Link>
+                        <motion.div
+                            viewport={{ once: true }}
+                            initial="hidden"
+                            whileInView="show"
+                            variants={variants}
+                        >
+                            <Link href="/identity" className="text-md italic font-serif z-10">
+                                <Tag text={EXPLORE_BTN_COPY} border={false} icon={null} underline />
+                            </Link>
+                        </motion.div>
+                    </MotionConfig>
                 </div>
             </div>
         </MotionConfig>

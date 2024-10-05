@@ -57,10 +57,10 @@ const ContactForm = (props: Props) => {
 
     return (
         <div className="max-w-3xl px-4 md:p-0 w-full" id='contactForm'>
-            <div className='w-full h-[680px] bg-ivory rounded-lg'>
+            <div className='w-full h-[740px] md:h-[680px] bg-ivory rounded-lg'>
                 <AnimatePresence mode='popLayout'>
                     {!submitted ? (<motion.form
-                        className="p-4 w-full ring-1 bg-ivory text-royal rounded-lg flex flex-col gap-8 h-[680px] justify-between overflow-hidden"
+                        className="p-4 w-full ring-1 bg-ivory text-royal rounded-lg flex flex-col gap-8 h-full justify-between overflow-hidden"
                         exit={{ y: 24, opacity: 0, filter: "blur(4px)" }}
                         transition={{ type: "spring", duration: 0.6, bounce: 0 }}
                         key="form"
@@ -114,7 +114,7 @@ const ContactForm = (props: Props) => {
                         initial={{ y: -64, opacity: 0, filter: "blur(4px)" }}
                         animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
                         transition={{ type: "spring", duration: 0.6, bounce: 0 }}
-                        className='bg-black/5 text-royal w-full h-[680px] flex flex-col justify-center items-center text-center'>
+                        className='bg-black/5 text-royal w-full h-full flex flex-col justify-center items-center text-center'>
                         <p className='text-3xl md:text-5xl font-medium mb-2'>Modulo ricevuto!</p>
                         <p className='text-2xl md:text-4xl text-royal/50 px-8 md:px-16'>Verrai contattato dal nostro team al più presto.</p>
                     </motion.div>)
