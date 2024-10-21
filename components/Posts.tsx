@@ -12,7 +12,6 @@ const Posts = async () => {
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/get/all`, {
             cache: 'no-store',
-            next: { revalidate: 0 },
         });
         const data = await response.json();
 
