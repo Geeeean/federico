@@ -11,6 +11,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { FormEvent, useCallback, useState } from 'react'
 
 import { useReCaptcha } from "next-recaptcha-v3";
+import { apiFetch } from '@/lib/api'
 import Link from 'next/link'
 
 const variants = {
@@ -29,25 +30,37 @@ const ContactForm = (props: Props) => {
     const [formValues, setFormValues] = useState<{ name: string, email: string, description: string, telephone: string, terms: boolean }>({ name: "", email: "", description: "", telephone: "", terms: false })
     const [submitted, setSubmitted] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [submitError, setSubmitError] = useState<string | null>(null)
 
     const handleSubmit = useCallback(
         async (e: FormEvent<HTMLFormElement>) => {
             e.preventDefault();
 
             setIsLoading(true);
+            setSubmitError(null);
 
-            const token = await executeRecaptcha("form_submit");
+            try {
+                const token = await executeRecaptcha("form_submit");
 
-            const fetchRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/modals/submit`, {
-                method: "POST",
-                body: JSON.stringify({
-                    data: { formValues },
-                    token,
-                }),
-            });
+                const fetchRes = await apiFetch("/modals/submit", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        data: { formValues },
+                        token,
+                    }),
+                });
 
-            if (fetchRes.status == 200) {
-                setSubmitted(true)
+                if (fetchRes.status == 200) {
+                    setSubmitted(true)
+                } else if (fetchRes.status == 429) {
+                    setSubmitError("Troppe richieste, riprova più tardi.")
+                } else if (fetchRes.status == 400) {
+                    setSubmitError("Controlla i dati inseriti e riprova.")
+                } else {
+                    setSubmitError("Non è stato possibile inviare il modulo, riprova più tardi.")
+                }
+            } catch {
+                setSubmitError("Non è stato possibile inviare il modulo, riprova più tardi.")
             }
 
             setIsLoading(false);
@@ -82,19 +95,19 @@ const ContactForm = (props: Props) => {
                         <div className='flex flex-col gap-5'>
                             <div>
                                 <span className='font-semibold'>Nome</span>
-                                <Input id="Nome" name='name' placeholder="Mario Rossi" required className='mt-1' onChange={(e) => setFormValues(prev => ({ ...prev, name: e.target.value }))} />
+                                <Input id="Nome" name='name' maxLength={200} placeholder="Mario Rossi" required className='mt-1' onChange={(e) => setFormValues(prev => ({ ...prev, name: e.target.value }))} />
                             </div>
                             <div>
                                 <span className='font-semibold'>Email</span>
-                                <Input id="Email" name='email' placeholder="mario.rossi@gmail.com" required type='email' className='mt-1' onChange={(e) => setFormValues(prev => ({ ...prev, email: e.target.value }))} />
+                                <Input id="Email" name='email' placeholder="mario.rossi@gmail.com" required type='email' maxLength={254} className='mt-1' onChange={(e) => setFormValues(prev => ({ ...prev, email: e.target.value }))} />
                             </div>
                             <div>
                                 <span className='font-semibold'>Cellulare</span>
-                                <Input id="Nome" name='telephone' placeholder="+39 XXX XXX XXXX" required className='mt-1' onChange={(e) => setFormValues(prev => ({ ...prev, telephone: e.target.value }))} />
+                                <Input id="Cellulare" name='telephone' type='tel' maxLength={40} placeholder="+39 XXX XXX XXXX" required className='mt-1' onChange={(e) => setFormValues(prev => ({ ...prev, telephone: e.target.value }))} />
                             </div>
                             <div>
                                 <span className='font-semibold'>Descrizione</span>
-                                <Textarea name='description' className='h-40 resize-none' placeholder="Buongiorno, vorrei richiedere una consulenza legale in merito a una questione di diritto del lavoro. Sono stato recentemente licenziato dalla mia azienda senza preavviso..." onChange={(e) => setFormValues(prev => ({ ...prev, description: e.target.value }))} />
+                                <Textarea name='description' maxLength={5000} className='h-40 resize-none' placeholder="Buongiorno, vorrei richiedere una consulenza legale in merito a una questione di diritto del lavoro. Sono stato recentemente licenziato dalla mia azienda senza preavviso..." onChange={(e) => setFormValues(prev => ({ ...prev, description: e.target.value }))} />
                             </div>
 
                             <div className='flex items-center gap-2'>
@@ -108,7 +121,10 @@ const ContactForm = (props: Props) => {
                             </div>
                         </div>
 
-                        <Button className='bg-royal text-ivory font-bold w-full py-3 hover:opacity-85 hover:bg-royal' type='submit'>Invia il modulo</Button>
+                        <div className='flex flex-col gap-1 items-center'>
+                            <Button className='bg-royal text-ivory font-bold w-full py-3 hover:opacity-85 hover:bg-royal' type='submit' disabled={isLoading}>Invia il modulo</Button>
+                            {submitError ? <span className='text-red-600 text-sm' role='alert'>{submitError}</span> : null}
+                        </div>
                     </motion.form>) : (<motion.div
                         key="submitted"
                         initial={{ y: -64, opacity: 0, filter: "blur(4px)" }}

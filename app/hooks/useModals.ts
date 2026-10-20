@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/react-query/client";
+import { apiFetch } from "@/lib/api";
 
 export const fetchModals = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/modals/get/all`);
+    const response = await apiFetch(`/modals/get/all`);
 
     const data = await response.json();
 

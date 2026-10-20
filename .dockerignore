@@ -1,0 +1,11 @@
+.git
+.next
+out
+node_modules
+server/target
+server/data
+test-results
+playwright-report
+.env
+.env.local
+**/.DS_Store

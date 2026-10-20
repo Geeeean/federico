@@ -1,0 +1,5 @@
+[advisories]
+# rsa (Marvin attack) is only listed in Cargo.lock because sqlx's optional MySQL
+# driver appears there via weak feature deps; it is never compiled
+# (`cargo tree -i sqlx-mysql --target all` prints nothing). Re-check on sqlx upgrades.
+ignore = ["RUSTSEC-2023-0071"]

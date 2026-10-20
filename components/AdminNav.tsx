@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Button } from "./ui/button"
 
 import { BiLogOut } from "react-icons/bi";
-import { signOut } from "next-auth/react";
+import { apiFetch } from "@/lib/api";
 
 type Props = {}
 
@@ -17,6 +17,11 @@ const NAV_ITEMS = [
 const TITLE = "Admin dashboard"
 
 const AdminNav = (props: Props) => {
+    const logout = async () => {
+        await apiFetch("/auth/logout", { method: "POST", body: "{}" }).catch(() => null)
+        window.location.href = "/login"
+    }
+
     return (
         <div className="w-full p-4">
             <div className='w-full flex justify-between items-center pb-4 border-b'>
@@ -25,6 +30,9 @@ const AdminNav = (props: Props) => {
                     {
                         NAV_ITEMS.map((el, index) => <Link className="hover:underline" href={el.href} key={index}>{el.copy}</Link>)
                     }
+                    <Button variant="ghost" size="icon" onClick={logout} title="Esci" aria-label="Esci">
+                        <BiLogOut className="h-5 w-5" />
+                    </Button>
                 </div>
             </div>
         </div>

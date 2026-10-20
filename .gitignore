@@ -128,3 +128,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Rust server / e2e
+server/target
+server/data
+test-results
+playwright-report

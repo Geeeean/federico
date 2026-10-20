@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/react-query/client";
+import { apiFetch } from "@/lib/api";
 
 export const fetchPosts = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/get/all`);
+    const response = await apiFetch(`/posts/get/all`);
 
     const data = await response.json();
 

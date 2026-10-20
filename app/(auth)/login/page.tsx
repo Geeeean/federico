@@ -1,7 +1,7 @@
 "use client"
 
 import { FormEvent, useState } from "react"
-import { signIn } from "next-auth/react"
+import { apiFetch } from "@/lib/api"
 import { useRouter } from "next/navigation"
 import clsx from "clsx"
 
@@ -29,15 +29,17 @@ const Login = (props: Props) => {
     };
 
     if (target.username && target.password) {
-      const signInData = await signIn("credentials", {
-        username: target.username.value,
-        password: target.password.value,
-        redirect: false
-      });
+      const response = await apiFetch("/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+          username: target.username.value,
+          password: target.password.value,
+        }),
+      }).catch(() => null);
 
       setLoading(false)
 
-      if (signInData?.error) {
+      if (!response || !response.ok) {
         setAuthError(true)
       } else {
         router.push("/dashboard");
@@ -48,8 +50,6 @@ const Login = (props: Props) => {
     }
 
   }
-
-  console.log(authError)
 
   return (
     <main className='w-screen h-screen flex justify-center items-center'>
@@ -70,7 +70,7 @@ const Login = (props: Props) => {
             </div>
 
             <div className="flex flex-col gap-1 items-center">
-              <Button className="w-full" type="submit">Accedi</Button>
+              <Button className="w-full" type="submit" disabled={loading}>Accedi</Button>
               {authError ? <span className="text-red-500">Errore nell'autenticazione</span> : null}
             </div>
           </form>

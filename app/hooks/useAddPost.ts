@@ -1,14 +1,11 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/react-query/client";
+import { apiFetch } from "@/lib/api";
 
 const postPost = async (Post: { title: string, description: string, link: string | null }) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/add`, {
+    const response = await apiFetch(`/posts/add`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
         body: JSON.stringify({ post: Post }),
-        credentials: 'include'
     })
     
     if (response.status != 200) {

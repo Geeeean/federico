@@ -1,14 +1,11 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/react-query/client";
+import { apiFetch } from "@/lib/api";
 
 const removeModalFetch = async (Modal: { id: number }) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/modals/remove`, {
+    const response = await apiFetch(`/modals/remove`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
         body: JSON.stringify({ modal: Modal }),
-        credentials: 'include'
     })
 
     if (response.status != 200) {

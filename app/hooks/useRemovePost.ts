@@ -1,14 +1,11 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/react-query/client";
+import { apiFetch } from "@/lib/api";
 
 const removePostFetch = async (Post: { id: number }) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/remove`, {
+    const response = await apiFetch(`/posts/remove`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
         body: JSON.stringify({ post: Post }),
-        credentials: 'include'
     })
 
     if (response.status != 200) {
