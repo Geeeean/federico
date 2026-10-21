@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ReCaptchaProvider useEnterprise>
+    <ReCaptchaProvider useEnterprise strategy="lazyOnload">
       <html lang="en">
         <body className={`${inter.className} bg-royal text-ivory flex flex-col items-center w-full`}>
           <Hero>

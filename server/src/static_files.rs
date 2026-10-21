@@ -104,8 +104,14 @@ pub async fn serve(State(state): State<AppState>, jar: CookieJar, mut req: Reque
         }
     }
 
+    let is_media = [".webp", ".jpg", ".png", ".svg", ".ico", ".woff2"]
+        .iter()
+        .any(|ext| decoded.ends_with(ext));
     let cache = if immutable && res.status().is_success() {
         "public, max-age=31536000, immutable"
+    } else if is_media && res.status().is_success() {
+        // Images in /public have fixed names, so cache them for a day only.
+        "public, max-age=86400"
     } else {
         "no-cache"
     };
