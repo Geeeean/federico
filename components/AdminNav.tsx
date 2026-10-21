@@ -24,9 +24,9 @@ const AdminNav = (props: Props) => {
 
     return (
         <div className="w-full p-4">
-            <div className='w-full flex justify-between items-center pb-4 border-b'>
+            <div className='w-full flex flex-wrap gap-2 justify-between items-center pb-4 border-b'>
                 <span className="font-medium text-xl">{TITLE}</span>
-                <div className="flex gap-6 items-center">
+                <div className="flex flex-wrap gap-x-6 gap-y-2 items-center">
                     {
                         NAV_ITEMS.map((el, index) => <Link className="hover:underline" href={el.href} key={index}>{el.copy}</Link>)
                     }

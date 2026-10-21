@@ -34,6 +34,13 @@ const login = async (page: Page) => {
     await page.locator("#password").fill(ADMIN_PASS)
     await page.getByRole("button", { name: "Accedi" }).click()
     await expect(page).toHaveURL(/\/dashboard$/)
+    await waitForDashboard(page)
+}
+
+// The prerendered HTML shows "Caricamento..." until React has hydrated and
+// loaded the posts, so buttons only work once it's gone.
+const waitForDashboard = async (page: Page) => {
+    await expect(page.getByText("Caricamento...")).toBeHidden()
 }
 
 test.beforeEach(async ({ page }) => {
@@ -126,7 +133,7 @@ test("admin can publish and remove a news post", async ({ page }) => {
 
     // A javascript: link is refused by the server and never published.
     await page.goto("/dashboard")
-    await page.waitForLoadState("networkidle")
+    await waitForDashboard(page)
     await page.getByRole("button", { name: "Aggiungi notizia" }).click()
     await expect(dialog).toBeVisible()
     await inputs.nth(0).fill(`${title} XSS`)
