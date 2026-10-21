@@ -49,6 +49,7 @@ Then open http://localhost:8080. (`6LeIxAc...` is Google's public reCAPTCHA test
 | `COOKIE_SECURE` | | `true` | `false` only for http://localhost |
 | `SESSION_TTL_HOURS` | | `12` | 1 to 168 |
 | `CLIENT_IP_HEADER` | | | header with the real client IP behind a proxy, e.g. `x-real-ip` |
+| `LEGACY_DATABASE_URL` | | | migration only: copies missing rows from the old Postgres DB at startup (read-only, never duplicates); startup fails if it can't |
 | `SYS_ADMIN_USERNAME` / `SYS_ADMIN_PASSWORD` | | | creates the admin on first start if missing; never overwrites |
 
 The frontend's public reCAPTCHA site key is in `.env.production`.
@@ -67,6 +68,7 @@ federico-server import export.json
 
 ```sh
 cd server && cargo test            # API + security tests (in-memory DB)
+# migration tests need a Postgres: LEGACY_TEST_DATABASE_URL=postgres://... cargo test --test legacy
 npx playwright test                # browser tests, against a running server on :8081
 ```
 CI (`.github/workflows/ci.yml`) runs rustfmt, clippy, the Rust tests, `cargo audit`, the TypeScript check, `npm audit`, the static build, the browser tests on desktop and mobile, and a Docker build, on every PR and weekly.

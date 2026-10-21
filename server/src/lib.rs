@@ -7,6 +7,7 @@ pub mod db;
 pub mod error;
 pub mod extract;
 pub mod import;
+pub mod legacy;
 pub mod posts;
 pub mod ratelimit;
 pub mod security;
