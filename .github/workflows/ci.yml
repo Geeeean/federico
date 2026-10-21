@@ -1,7 +1,10 @@
 name: CI
 
 on:
+  # PRs (incl. Dependabot) are tested via pull_request; pushes only on master,
+  # so each change runs once instead of twice.
   push:
+    branches: [master]
   pull_request:
   schedule:
     # Weekly, so new advisories in dependencies show up even without commits.
@@ -32,9 +35,9 @@ jobs:
       run:
         working-directory: server
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - run: rustup toolchain install stable --profile minimal --component rustfmt,clippy && rustup default stable
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: |
             ~/.cargo/registry
@@ -51,7 +54,7 @@ jobs:
           command -v cargo-audit >/dev/null || cargo install cargo-audit --locked
           cargo audit --deny warnings
       - run: cargo build --release --locked
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: server-bin
           path: server/target/release/federico-server
@@ -61,8 +64,8 @@ jobs:
     name: Frontend (typecheck, audit, build)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -71,7 +74,7 @@ jobs:
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=moderate
       - run: npm run build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: site
           path: out
@@ -86,17 +89,17 @@ jobs:
       E2E_ADMIN_USER: admin
       E2E_ADMIN_PASS: ci-e2e-admin-password
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
       - run: npm ci
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v8
         with:
           name: server-bin
           path: bin
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v8
         with:
           name: site
           path: out
@@ -116,7 +119,7 @@ jobs:
       - if: failure()
         run: cat server.log
       - if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-report
           path: playwright-report
@@ -126,5 +129,5 @@ jobs:
     name: Docker image builds
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - run: docker build -t federico:ci .

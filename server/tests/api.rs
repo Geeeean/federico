@@ -887,3 +887,19 @@ async fn successful_logins_do_not_count_towards_the_limit() {
         .await;
     assert_eq!(res.status, StatusCode::TOO_MANY_REQUESTS);
 }
+
+#[tokio::test]
+async fn public_images_are_cached_for_a_day_but_pages_are_not() {
+    let app = setup().await;
+    write(app._static.path(), "hero-640.webp", "img");
+    let img = app.get("/hero-640.webp", None).await;
+    assert_eq!(img.headers[header::CACHE_CONTROL], "public, max-age=86400");
+    assert_eq!(
+        app.get("/", None).await.headers[header::CACHE_CONTROL],
+        "no-cache"
+    );
+    assert_eq!(
+        app.get("/missing.webp", None).await.headers[header::CACHE_CONTROL],
+        "no-cache"
+    );
+}

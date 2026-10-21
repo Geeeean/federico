@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/legacy/image"
-import build from "@/public/gary-walker-jones-4RCEZ0DSd88-unsplash.jpg"
 
 import logo from "@/public/logo_white.svg"
 
@@ -22,7 +21,6 @@ const Hero = ({
     children: React.ReactNode;
 }>) => {
     const path = usePathname()
-    console.log(path)
 
     return <div className="w-full flex flex-col items-center relative">
         {children}
@@ -31,13 +29,18 @@ const Hero = ({
             <motion.div
                 variants={variants}
                 className='opacity-30 w-full h-full absolute top-0 left-0 -z-10 overflow-hidden flex items-center justify-center'>
-                <Image
-                    src={build}
+                {/* Background photo: resized WebP variants instead of the 4000px JPEG.
+                    It is the largest element on the page, so load it first. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                    src="/hero-1280.webp"
+                    srcSet="/hero-640.webp 640w, /hero-1280.webp 1280w, /hero-1920.webp 1920w"
+                    sizes="100vw"
                     alt=""
-                    layout="fill"
-                    objectFit="cover"
-                    objectPosition="center"
-                    className="h-full w-full"
+                    // @ts-expect-error React 18 only knows the lowercase attribute
+                    fetchpriority="high"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover object-center"
                 />
             </motion.div>
 
