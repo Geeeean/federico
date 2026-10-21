@@ -49,7 +49,7 @@ Then open http://localhost:8080. (`6LeIxAc...` is Google's public reCAPTCHA test
 | `COOKIE_SECURE` | | `true` | `false` only for http://localhost |
 | `SESSION_TTL_HOURS` | | `12` | 1 to 168 |
 | `CLIENT_IP_HEADER` | | | header with the real client IP behind a proxy, e.g. `x-real-ip` |
-| `LEGACY_DATABASE_URL` | | | migration only: copies missing rows from the old Postgres DB at startup (read-only, never duplicates); startup fails if it can't |
+| `LEGACY_DATABASE_URL` | | | only for the manual `sync-legacy` command (old Postgres DB) |
 | `SYS_ADMIN_USERNAME` / `SYS_ADMIN_PASSWORD` | | | creates the admin on first start if missing; never overwrites |
 
 The frontend's public reCAPTCHA site key is in `.env.production`.
@@ -73,6 +73,12 @@ npx playwright test                # browser tests, against a running server on 
 ```
 CI (`.github/workflows/ci.yml`) runs rustfmt, clippy, the Rust tests, `cargo audit`, the TypeScript check, `npm audit`, the static build, the browser tests on desktop and mobile, and a Docker build, on every PR and weekly.
 
-## Deploy
+## Deploy & operations
+
+- Railway deploys `master` only after GitHub CI passes ("wait for CI" is on).
+- The service has a volume at `/data`, so Railway stops the old container before starting the new one: expect a few seconds of downtime per deploy. `/healthz` checks the database, so a deploy that can't use it is never marked healthy.
+- Backups of the `/data` volume: daily (kept 6 days) and weekly (kept 27 days), plus a manual one taken right after the migration. Restore from the volume's Backups tab in Railway.
+- Railway ignores `railway.json`; build/start settings live in the service settings (Dockerfile, no custom start command, health check `/healthz`).
+
 
 `docker build .` produces the production image. On Railway: attach a volume at `/data` and set the variables above.

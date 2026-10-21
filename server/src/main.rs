@@ -8,6 +8,7 @@ use tracing_subscriber::EnvFilter;
 const USAGE: &str = "usage:
   federico-server                        start the web server
   federico-server import <file.json>     import data exported from the old database
+  federico-server sync-legacy            copy rows missing here from the old Postgres DB (LEGACY_DATABASE_URL)
   federico-server set-password <user>    set an admin password (read from stdin) and end their sessions";
 
 #[tokio::main]
@@ -32,6 +33,18 @@ async fn main() -> Result<()> {
             let raw = std::fs::read_to_string(file).with_context(|| format!("reading {file}"))?;
             let (u, p, c) = import::run(&pool, serde_json::from_str(&raw)?).await?;
             println!("imported {u} users, {p} posts, {c} contact forms");
+            Ok(())
+        }
+        ["sync-legacy"] => {
+            // Manual only: copies rows missing from SQLite out of the old Postgres
+            // database (read-only there). Never runs at startup.
+            let url = std::env::var("LEGACY_DATABASE_URL")
+                .ok()
+                .filter(|s| !s.is_empty())
+                .context("LEGACY_DATABASE_URL is not set")?;
+            let pool = db::connect(&database_path()).await?;
+            let r = legacy::sync_from_url(&pool, &url).await?;
+            println!("{r:?}");
             Ok(())
         }
         ["set-password", user] => {
@@ -67,35 +80,6 @@ async fn serve() -> Result<()> {
         tracing::warn!(dir = %config.static_dir.display(), "static dir has no index.html, did you build the frontend?");
     }
     let pool = db::connect(&config.database_path).await?;
-
-    // Migration period only: copy anything missing from the old Postgres DB.
-    // Any failure stops startup, so we never serve with data missing.
-    if let Some(url) = std::env::var("LEGACY_DATABASE_URL")
-        .ok()
-        .filter(|s| !s.is_empty())
-    {
-        let r = legacy::sync_from_url(&pool, &url)
-            .await
-            .context("legacy sync failed")?;
-        let (lu, lp, lc) = r.legacy_counts;
-        let (su, sp, sc): (i64, i64, i64) = sqlx::query_as(
-            "SELECT (SELECT count(*) FROM users), (SELECT count(*) FROM posts), (SELECT count(*) FROM contact_forms)",
-        )
-        .fetch_one(&pool)
-        .await?;
-        tracing::info!(
-            legacy_users = lu,
-            legacy_posts = lp,
-            legacy_contacts = lc,
-            added_users = r.users_added,
-            added_posts = r.posts_added,
-            added_contacts = r.contacts_added,
-            sqlite_users = su,
-            sqlite_posts = sp,
-            sqlite_contacts = sc,
-            "legacy sync done"
-        );
-    }
 
     if let Some((user, pass)) = &config.admin_seed {
         if auth::seed_admin(&pool, user, pass).await? {
