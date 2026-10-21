@@ -85,7 +85,7 @@ pub fn router(state: AppState) -> Router {
 
     let mut app = Router::new()
         .nest("/api", api)
-        .route("/healthz", get(|| async { "ok" }))
+        .route("/healthz", get(healthz))
         .fallback(static_files::serve)
         .with_state(state);
 
@@ -93,4 +93,28 @@ pub fn router(state: AppState) -> Router {
         app = app.layer(SetResponseHeaderLayer::if_not_present(name, value));
     }
     app.layer(common)
+}
+
+/// Used by Railway before switching traffic to a new deploy: only report
+/// healthy when the database file can actually be read and written.
+async fn healthz(
+    axum::extract::State(state): axum::extract::State<AppState>,
+) -> (StatusCode, &'static str) {
+    let check = async {
+        let mut tx = state.db.begin().await?;
+        sqlx::query("SELECT count(*) FROM users")
+            .execute(&mut *tx)
+            .await?;
+        sqlx::query("CREATE TEMP TABLE IF NOT EXISTS _health (x)")
+            .execute(&mut *tx)
+            .await?;
+        tx.rollback().await
+    };
+    match check.await {
+        Ok(()) => (StatusCode::OK, "ok"),
+        Err(e) => {
+            tracing::error!(error = ?e, "health check failed");
+            (StatusCode::SERVICE_UNAVAILABLE, "database unavailable")
+        }
+    }
 }

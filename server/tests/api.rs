@@ -903,3 +903,12 @@ async fn public_images_are_cached_for_a_day_but_pages_are_not() {
         "no-cache"
     );
 }
+
+#[tokio::test]
+async fn health_check_fails_when_the_database_is_gone() {
+    let app = setup().await;
+    assert_eq!(app.get("/healthz", None).await.status, StatusCode::OK);
+    app.state.db.close().await;
+    let res = app.get("/healthz", None).await;
+    assert_eq!(res.status, StatusCode::SERVICE_UNAVAILABLE);
+}
