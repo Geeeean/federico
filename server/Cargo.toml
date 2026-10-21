@@ -12,7 +12,7 @@ path = "src/main.rs"
 anyhow = "1"
 axum = { version = "0.8", features = ["macros"] }
 axum-extra = { version = "0.12", features = ["cookie"] }
-bcrypt = "0.17"
+bcrypt = "0.19"
 getrandom = "0.4"
 hex = "0.4"
 percent-encoding = "2"
