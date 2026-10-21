@@ -1,7 +1,10 @@
 name: CI
 
 on:
+  # PRs (incl. Dependabot) are tested via pull_request; pushes only on master,
+  # so each change runs once instead of twice.
   push:
+    branches: [master]
   pull_request:
   schedule:
     # Weekly, so new advisories in dependencies show up even without commits.
