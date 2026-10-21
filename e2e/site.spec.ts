@@ -27,6 +27,9 @@ const watchForErrors = (page: Page) => {
 
 const login = async (page: Page) => {
     await page.goto("/login")
+    // Let Next prefetch /dashboard while logged out first: this used to poison
+    // the router cache and break the dashboard after login.
+    await page.waitForLoadState("networkidle")
     await page.locator("#username").fill(ADMIN_USER)
     await page.locator("#password").fill(ADMIN_PASS)
     await page.getByRole("button", { name: "Accedi" }).click()
@@ -35,6 +38,12 @@ const login = async (page: Page) => {
 
 test.beforeEach(async ({ page }) => {
     await stubRecaptcha(page)
+    // E2E_CPU_THROTTLE=4 simulates a slow machine (Chromium only).
+    const rate = Number(process.env.E2E_CPU_THROTTLE ?? 0)
+    if (rate > 1) {
+        const cdp = await page.context().newCDPSession(page)
+        await cdp.send("Emulation.setCPUThrottlingRate", { rate })
+    }
 })
 
 test("public pages render without errors", async ({ page }) => {
@@ -97,8 +106,9 @@ test("admin can publish and remove a news post", async ({ page }) => {
     const title = `Notizia E2E ${Date.now()} ${test.info().project.name}`
     await login(page)
 
-    await page.getByRole("button", { name: "Aggiungi notizia" }).click()
     const dialog = page.getByRole("dialog")
+    await page.getByRole("button", { name: "Aggiungi notizia" }).click()
+    await expect(dialog).toBeVisible()
     const inputs = dialog.locator("input")
     await inputs.nth(0).fill(title)
     await inputs.nth(1).fill("https://example.com/notizia")
@@ -116,7 +126,9 @@ test("admin can publish and remove a news post", async ({ page }) => {
 
     // A javascript: link is refused by the server and never published.
     await page.goto("/dashboard")
+    await page.waitForLoadState("networkidle")
     await page.getByRole("button", { name: "Aggiungi notizia" }).click()
+    await expect(dialog).toBeVisible()
     await inputs.nth(0).fill(`${title} XSS`)
     await inputs.nth(1).fill("javascript:alert(document.cookie)")
     await dialog.locator("textarea").fill("x")

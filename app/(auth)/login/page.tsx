@@ -2,7 +2,6 @@
 
 import { FormEvent, useState } from "react"
 import { apiFetch } from "@/lib/api"
-import { useRouter } from "next/navigation"
 import clsx from "clsx"
 
 import { Button } from "@/components/ui/button"
@@ -13,8 +12,6 @@ import { Label } from "@/components/ui/label"
 type Props = {}
 
 const Login = (props: Props) => {
-  const router = useRouter()
-
   const [authError, setAuthError] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -42,7 +39,8 @@ const Login = (props: Props) => {
       if (!response || !response.ok) {
         setAuthError(true)
       } else {
-        router.push("/dashboard");
+        // Full page load: never reuse router data prefetched while logged out.
+        window.location.assign("/dashboard");
       }
     } else {
       setAuthError(true)

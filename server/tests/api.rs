@@ -766,7 +766,6 @@ async fn dashboard_pages_redirect_when_logged_out() {
         "/dashboard/",
         "/dashboard/modals",
         "/dashboard.html",
-        "/dashboard.txt",
         "/Dashboard",
         "/DASHBOARD/modals",
         "/%64ashboard",
@@ -776,8 +775,25 @@ async fn dashboard_pages_redirect_when_logged_out() {
         assert!(res.status.is_redirection(), "{path} gave {}", res.status);
         assert_eq!(res.headers[header::LOCATION], "/login", "{path}");
     }
+    // Router prefetches get a 401, never a redirect that could be cached as the page.
+    write(app._static.path(), "dashboard.txt", "RSC");
+    for path in [
+        "/dashboard.txt",
+        "/dashboard?_rsc=abc",
+        "/dashboard/__next._tree.txt",
+    ] {
+        let res = app.get(path, None).await;
+        assert_eq!(res.status, StatusCode::UNAUTHORIZED, "{path}");
+    }
+    let rsc = Request::get("/dashboard")
+        .header("rsc", "1")
+        .body(Body::empty())
+        .unwrap();
+    assert_eq!(app.send(rsc).await.status, StatusCode::UNAUTHORIZED);
+
     let cookie = app.login().await;
     assert_eq!(app.get("/dashboard", Some(&cookie)).await.body, "DASHBOARD");
+    assert_eq!(app.get("/dashboard.txt", Some(&cookie)).await.body, "RSC");
     assert_eq!(
         app.get("/dashboard/modals", Some(&cookie)).await.body,
         "MODALS"

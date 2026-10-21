@@ -20,6 +20,16 @@ fn is_admin_page(decoded_lower: &str) -> bool {
         || decoded_lower.starts_with("/dashboard.")
 }
 
+fn is_router_request(req: &Request, decoded_path: &str) -> bool {
+    decoded_path.ends_with(".txt")
+        || req.headers().contains_key("rsc")
+        || req.headers().contains_key("next-router-prefetch")
+        || req
+            .uri()
+            .query()
+            .is_some_and(|q| q.split('&').any(|kv| kv.starts_with("_rsc=")))
+}
+
 /// Plain path segments only: no traversal, no encoded tricks.
 fn is_plain_path(path: &str) -> bool {
     path.starts_with('/')
@@ -48,6 +58,12 @@ pub async fn serve(State(state): State<AppState>, jar: CookieJar, mut req: Reque
     if is_admin_page(&decoded.to_lowercase()) {
         match session_from_jar(&state, &jar).await {
             Ok(Some(_)) => {}
+            // Next's client router prefetches page data (`*.txt`, `?_rsc=`, `RSC: 1`).
+            // Answer those with 401 instead of a redirect, otherwise the router
+            // caches the login page as the dashboard's content.
+            Ok(None) if is_router_request(&req, &decoded) => {
+                return StatusCode::UNAUTHORIZED.into_response()
+            }
             Ok(None) => return Redirect::to("/login").into_response(),
             Err(e) => return crate::error::AppError::Internal(e).into_response(),
         }
